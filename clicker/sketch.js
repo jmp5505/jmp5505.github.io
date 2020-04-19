@@ -7,6 +7,7 @@ let autoprice = 200;
 let autocoef = 10;
 let autofarm = 0;
 
+
 function setup() {
     createCanvas(1200, 600);
     cookie = new Cookie();
