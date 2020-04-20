@@ -6,11 +6,17 @@ let bomb1 = [];
 let bomb2 = [];
 let speedBox = [];
 let borderBox = [];
+let freezeBox = [];
+let healBox = [];
 const maxBombs = 10;
 const maxSpeedBoxes = 3;
-const maxBorderBoxes = 1;
+const maxBorderBoxes = 2;
+const maxFreezeBoxes = 4;
+const maxHealBoxes = 2;
 const speedBoxChance = 600;
-const borderBoxChance = 600;
+const borderBoxChance = 1200;
+const freezeBoxChance = 1300;
+const healBoxChance = 600;
 let score1 = 0;
 let score2 = 0;
 
@@ -115,7 +121,60 @@ function draw() {
       borderBox.splice(l, 1);
     }
   }
+  if (frameCount % freezeBoxChance === 0) {
+    freezeBox.push(new Box(random(200, width -200), random(0, height), 2));
+  }
+  for (let m = 0; m < freezeBox.length; m++) {
+    if (freezeBox.length <= maxFreezeBoxes) {
+      if ((player1.pos.x + player1.size) < freezeBox[m].pos.x || player1.pos.x > (freezeBox[m].pos.x + 20) || (player1.pos.y + player1.size) < freezeBox[m].pos.y || player1.pos.y > (freezeBox[m].pos.y + 20)) {
+        freezeBox[m].render(color(0, 255, 255));
+      }
 
+      else {
+        freezeBox[m].eat(player1, player2);
+        freezeBox.splice(m, 1);
+        break;
+      }
+      if ((player2.pos.x + player2.size) < freezeBox[m].pos.x || player2.pos.x > (freezeBox[m].pos.x + 20) || (player2.pos.y + player2.size) < freezeBox[m].pos.y || player2.pos.y > (freezeBox[m].pos.y + 20)) {
+        freezeBox[m].render(color(0, 255, 255));
+      }
+      else {
+        freezeBox[m].eat(player2, player1);
+        freezeBox.splice(m, 1);
+        break;
+      }
+    }
+    else {
+      freezeBox.splice(m, 1);
+    }
+  }
+  if (frameCount % healBoxChance === 0) {
+    healBox.push(new Box(random(200, width -200), random(0, height), 3));
+  }
+  for (let n = 0; n < healBox.length; n++) {
+    if (healBox.length <= maxHealBoxes) {
+      if ((player1.pos.x + player1.size) < healBox[n].pos.x || player1.pos.x > (healBox[n].pos.x + 20) || (player1.pos.y + player1.size) < healBox[n].pos.y || player1.pos.y > (healBox[n].pos.y + 20)) {
+        healBox[n].render(color(255, 255, 255));
+      }
+
+      else {
+        healBox[n].eat(player1, player2);
+        healBox.splice(n, 1);
+        break;
+      }
+      if ((player2.pos.x + player2.size) < healBox[n].pos.x || player2.pos.x > (healBox[n].pos.x + 20) || (player2.pos.y + player2.size) < healBox[n].pos.y || player2.pos.y > (healBox[n].pos.y + 20)) {
+        healBox[n].render(color(255, 255, 255));
+      }
+      else {
+        healBox[n].eat(player2, player1);
+        healBox.splice(n, 1);
+        break;
+      }
+    }
+    else {
+      healBox.splice(n, 1);
+    }
+  }
   player1.update();
   player2.update();
   hp1.update(player1.hp);
@@ -166,6 +225,9 @@ function keyPressed() {
       bomb1 = [];
       bomb2 = [];
       speedBox = [];
+      borderBox = [];
+      freezeBox = [];
+      healBox = [];
       setup();
     }
   }

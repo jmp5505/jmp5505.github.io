@@ -9,6 +9,7 @@ class Player {
     this.blocked = false;
     this.bcounter = 0;
     this.scounter = 0;
+    this.fcounter = 0;
   }
 
   render() { //draw the player
@@ -30,6 +31,14 @@ class Player {
       if (this.scounter === 600) {
         this.speed = 2;
         this.scounter = 0;
+      }
+    }
+    if (this.speed === 0.5) {
+      this.fcounter++;
+      if (this.fcounter === 600) {
+        this.speed = 2;
+        this.vel.mult(4);
+        this.fcounter = 0;
       }
     }
     this.pos.add(this.vel);
