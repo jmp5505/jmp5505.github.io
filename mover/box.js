@@ -7,9 +7,8 @@ class Box {
     if (this.type === 3) {
       strokeWeight(1);
       stroke(255);
-      fill(255);
       rect(this.pos.x,this.pos.y, 20, 20);
-      strokeWeight(4);
+      strokeWeight(1);
       stroke('red');
       line(this.pos.x + 10, this.pos.y + 4, this.pos.x + 10, this.pos.y + 16);
       line(this.pos.x + 4, this.pos.y + 10, this.pos.x + 16, this.pos.y + 10);
@@ -24,7 +23,7 @@ class Box {
   }
   eat(player, enemy) {
     if (this.type === 0) {
-      player.speed = 4;
+      player.speed += 2;
     }
     else if (this.type === 1) {
       enemy.blocked = true;

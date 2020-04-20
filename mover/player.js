@@ -26,7 +26,7 @@ class Player {
         this.bcounter = 0;
       }
     }
-    if (this.speed === 4) {
+    if (this.speed > 2) {
       this.scounter++;
       if (this.scounter === 600) {
         this.speed = 2;
