@@ -1,13 +1,25 @@
 class Bomb {
-  constructor(x, y) {
+  constructor(x, y, col) {
     this.pos = createVector(x, y);
-    this.col = 1;
+    this.col = col
+    this.i = 0;
+    this.rise = true;
   }
 
-  render() {
-    this.col++;
-    if (this.col >= 255) {
-      this.col = 1;
+  render(col) {
+    this.col = col;
+    this.col.setBlue(this.i);
+    if (this.rise === true) {
+      this.i++;
+    }
+    else if (this.rise === false) {
+      this.i--;
+    }
+    if (this.i >= 255) {
+      this.rise = false;
+    }
+    else if (this.i <= 0) {
+      this.rise = true;
     }
     stroke(this.col);
     noFill();

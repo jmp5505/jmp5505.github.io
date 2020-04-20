@@ -1,38 +1,95 @@
 let player1;
 let player2;
+let speedBox = [];
+let hp1;
+let hp2;
 let bomb1 = [];
 let bomb2 = [];
-let maxbombs = 10;
+const maxBombs = 10;
+const maxBoxes = 3;
+let score1 = 0;
+let score2 = 0;
+
 function setup() {
-  createCanvas(1000, 600);
-  player1 = new Player(0, height/2, 50, 'green', 0);
-  player2 = new Player(950, height/2, 50, 'red', PI);
-  bomb1.push(new Bomb(-40, -40));
-  bomb2.push(new Bomb(-40, -40));
+  createCanvas(1200, 600);
+  player1 = new Player(0, height/2, 50, 'green', 10);
+  player2 = new Player(width - 50, height/2, 50, 'red', 10);
+  hp1 = new Hp(player1.hp, 50, 20, 'green', "red");
+  hp2 = new Hp(player2.hp, width - 70, 20, 'red', "green");
 }
 
 function draw() {
   background(0);
   player1.render();
   player2.render();
+  hp1.render();
+  hp2.render();
+  stroke(255);
+  textSize(40);
+  text(score1, 10, 590);
+  text(score2, width - 40, 590);
+
   for(let i = 0; i < bomb1.length; i++) {
-    if (bomb1.length <= maxbombs) {
-      bomb1[i].render();
+    if (bomb1.length <= maxBombs) {
+      if ((player2.pos.x + player2.size) < bomb1[i].pos.x || player2.pos.x > (bomb1[i].pos.x + 20) || (player2.pos.y + player2.size) < bomb1[i].pos.y || player2.pos.y > (bomb1[i].pos.y + 20)) {
+        bomb1[i].render(color(0, 255, 0));
+      }
+      else {
+        bomb1.splice(i, 1);
+        player2.hp -= 1;
+      }
     }
     else {
-      bomb1.splice(i, 1)
+      bomb1.splice(i, 1);
     }
   }
   for(let j = 0; j < bomb2.length; j++) {
-    if (bomb2.length <= maxbombs) {
-      bomb2[j].render();
+    if (bomb2.length <= maxBombs) {
+      if ((player1.pos.x + player1.size) < bomb2[j].pos.x || player1.pos.x > (bomb2[j].pos.x + 20) || (player1.pos.y + player1.size) < bomb2[j].pos.y || player1.pos.y > (bomb2[j].pos.y + 20)) {
+        bomb2[j].render(color(255, 0, 0));
+      }
+      else {
+        bomb2.splice(j, 1);
+        player1.hp -= 1;
+      }
     }
     else {
-      bomb2.splice(j, 1)
+      bomb2.splice(j, 1);
     }
   }
+  if (frameCount % 600 === 0) {
+    speedBox.push(new SpeedBox(random(200, width -200), random(0, height)));
+    console.log(speedBox);
+  }
+  for (let k = 0; k < speedBox.length; k++) {
+    if (speedBox.length <= maxBoxes) {
+      if ((player1.pos.x + player1.size) < speedBox[k].pos.x || player1.pos.x > (speedBox[k].pos.x + 20) || (player1.pos.y + player1.size) < speedBox[k].pos.y || player1.pos.y > (speedBox[k].pos.y + 20)) {
+        speedBox[k].render(color(255, 255, 0));
+      }
+
+      else {
+        speedBox[k].eat(player1);
+        speedBox.splice(k, 1);
+        break;
+      }
+      if ((player2.pos.x + player2.size) < speedBox[k].pos.x || player2.pos.x > (speedBox[k].pos.x + 20) || (player2.pos.y + player2.size) < speedBox[k].pos.y || player2.pos.y > (speedBox[k].pos.y + 20)) {
+        speedBox[k].render(color(255, 255, 0));
+      }
+      else {
+        speedBox[k].eat(player2);
+        speedBox.splice(k, 1);
+        break;
+      }
+    }
+    else {
+      speedBox.splice(k, 1);
+    }
+  }
+
   player1.update();
   player2.update();
+  hp1.update(player1.hp);
+  hp2.update(player2.hp);
 }
 
 function keyPressed() {
@@ -65,5 +122,21 @@ function keyPressed() {
   }
   else if (keyCode === 13) {
     bomb2.push(new Bomb(player2.pos.x + (player2.size/4), player2.pos.y  + (player2.size/4)));
+  }
+  else if (keyCode === 82) {
+    if (hp1.gameOver === true || hp2.gameOver === true) {
+      if (hp1.gameOver === true) {
+        score2++;
+      }
+      else if (hp2.gameOver === true) {
+        score1++;
+      }
+      hp1.gameOver = false;
+      hp2.gameOver = false;
+      bomb1 = [];
+      bomb2 = [];
+      speedBox = [];
+      setup();
+    }
   }
 }
