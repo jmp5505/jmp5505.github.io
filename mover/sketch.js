@@ -1,17 +1,21 @@
 let player1;
 let player2;
-let speedBox = [];
 let hp1;
 let hp2;
 let bomb1 = [];
 let bomb2 = [];
+let speedBox = [];
+let borderBox = [];
 const maxBombs = 10;
-const maxBoxes = 3;
+const maxSpeedBoxes = 3;
+const maxBorderBoxes = 1;
+const speedBoxChance = 600;
+const borderBoxChance = 600;
 let score1 = 0;
 let score2 = 0;
 
 function setup() {
-  createCanvas(1200, 600);
+  createCanvas(1300, 600);
   player1 = new Player(0, height/2, 50, 'green', 10);
   player2 = new Player(width - 50, height/2, 50, 'red', 10);
   hp1 = new Hp(player1.hp, 50, 20, 'green', "red");
@@ -57,18 +61,17 @@ function draw() {
       bomb2.splice(j, 1);
     }
   }
-  if (frameCount % 600 === 0) {
-    speedBox.push(new SpeedBox(random(200, width -200), random(0, height)));
-    console.log(speedBox);
+  if (frameCount % speedBoxChance === 0) {
+    speedBox.push(new Box(random(200, width -200), random(0, height), 0));
   }
   for (let k = 0; k < speedBox.length; k++) {
-    if (speedBox.length <= maxBoxes) {
+    if (speedBox.length <= maxSpeedBoxes) {
       if ((player1.pos.x + player1.size) < speedBox[k].pos.x || player1.pos.x > (speedBox[k].pos.x + 20) || (player1.pos.y + player1.size) < speedBox[k].pos.y || player1.pos.y > (speedBox[k].pos.y + 20)) {
         speedBox[k].render(color(255, 255, 0));
       }
 
       else {
-        speedBox[k].eat(player1);
+        speedBox[k].eat(player1, player2);
         speedBox.splice(k, 1);
         break;
       }
@@ -76,13 +79,40 @@ function draw() {
         speedBox[k].render(color(255, 255, 0));
       }
       else {
-        speedBox[k].eat(player2);
+        speedBox[k].eat(player2, player1);
         speedBox.splice(k, 1);
         break;
       }
     }
     else {
       speedBox.splice(k, 1);
+    }
+  }
+  if (frameCount % borderBoxChance === 0) {
+    borderBox.push(new Box(random(200, width -200), random(0, height), 1));
+  }
+  for (let l = 0; l < borderBox.length; l++) {
+    if (borderBox.length <= maxBorderBoxes) {
+      if ((player1.pos.x + player1.size) < borderBox[l].pos.x || player1.pos.x > (borderBox[l].pos.x + 20) || (player1.pos.y + player1.size) < borderBox[l].pos.y || player1.pos.y > (borderBox[l].pos.y + 20)) {
+        borderBox[l].render(color(0, 0, 255));
+      }
+
+      else {
+        borderBox[l].eat(player1, player2);
+        borderBox.splice(l, 1);
+        break;
+      }
+      if ((player2.pos.x + player2.size) < borderBox[l].pos.x || player2.pos.x > (borderBox[l].pos.x + 20) || (player2.pos.y + player2.size) < borderBox[l].pos.y || player2.pos.y > (borderBox[l].pos.y + 20)) {
+        borderBox[l].render(color(0, 0, 255));
+      }
+      else {
+        borderBox[l].eat(player2, player1);
+        borderBox.splice(l, 1);
+        break;
+      }
+    }
+    else {
+      borderBox.splice(l, 1);
     }
   }
 

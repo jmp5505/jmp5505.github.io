@@ -2,10 +2,13 @@ class Player {
   constructor(x, y, size, col, hp) {
     this.pos = createVector(x, y);
     this.vel = createVector(0, 0);
-    this.speed = 3;
+    this.speed = 2;
     this.size = size;
     this.col = col;
     this.hp = hp;
+    this.blocked = false;
+    this.bcounter = 0;
+    this.scounter = 0;
   }
 
   render() { //draw the player
@@ -14,21 +17,49 @@ class Player {
     rect(this.pos.x, this.pos.y, this.size, this.size);
 
   }
-
   update() { //move the player
-
+    if (this.blocked === true) {
+      this.bcounter++;
+      if (this.bcounter === 600) {
+        this.blocked = false;
+        this.bcounter = 0;
+      }
+    }
+    if (this.speed === 4) {
+      this.scounter++;
+      if (this.scounter === 600) {
+        this.speed = 2;
+        this.scounter = 0;
+      }
+    }
     this.pos.add(this.vel);
-    if (this.pos.x > (width + this.size) && this.vel.x > 0) {
-      this.pos.x = -this.size;
+    if (this.blocked === false) {
+      if (this.pos.x > (width + this.size) && this.vel.x > 0) {
+        this.pos.x = -this.size;
+      }
+      else if (this.pos.x < -this.size && this.vel.x < 0) {
+        this.pos.x = width + this.size;
+      }
+      else if (this.pos.y > (height + this.size) && this.vel.y > 0) {
+        this.pos.y = -this.size;
+      }
+      else if (this.pos.y < -this.size && this.vel.y < 0) {
+        this.pos.y = height + this.size;
+      }
     }
-    else if (this.pos.x < -this.size && this.vel.x < 0) {
-      this.pos.x = width + this.size;
-    }
-    else if (this.pos.y > (height + this.size) && this.vel.y > 0) {
-      this.pos.y = -this.size;
-    }
-    else if (this.pos.y < -this.size && this.vel.y < 0) {
-      this.pos.y = height + this.size;
+    else {
+      if (this.pos.x > (width - this.size) && this.vel.x > 0) {
+        this.pos.x = width - this.size;
+      }
+      else if (this.pos.x < 0 && this.vel.x < 0) {
+        this.pos.x = 0;
+      }
+      else if (this.pos.y > (height - this.size) && this.vel.y > 0) {
+        this.pos.y = height - this.size;
+      }
+      else if (this.pos.y < 0 && this.vel.y < 0) {
+        this.pos.y = 0;
+      }
     }
   }
 }
