@@ -7,15 +7,18 @@ class Player {
     this.col = col;
     this.hp = hp;
     this.blocked = false;
+    this.invincible = false;
     this.bcounter = 0;
     this.scounter = 0;
     this.fcounter = 0;
+    this.icounter = 0;
   }
 
   render() { //draw the player
     stroke(this.col);
     noFill();
     rect(this.pos.x, this.pos.y, this.size, this.size);
+
 
   }
   update() { //move the player
@@ -39,6 +42,14 @@ class Player {
         this.speed = 2;
         this.vel.mult(4);
         this.fcounter = 0;
+      }
+    }
+    if (this.invincible === true) {
+      this.icounter++;
+      if (this.icounter === 300) {
+        this.speed = 2;
+        this.invincible = false;
+        this.icounter = 0;
       }
     }
     this.pos.add(this.vel);

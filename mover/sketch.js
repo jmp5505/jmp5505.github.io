@@ -8,20 +8,24 @@ let speedBox = [];
 let borderBox = [];
 let freezeBox = [];
 let healBox = [];
+let superBox = [];
 const maxBombs = 10;
 const maxSpeedBoxes = 3;
 const maxBorderBoxes = 2;
 const maxFreezeBoxes = 4;
 const maxHealBoxes = 2;
+const maxSuperBoxes = 1;
 const speedBoxChance = 600;
 const borderBoxChance = 1200;
 const freezeBoxChance = 1300;
 const healBoxChance = 600;
+const superBoxChance = 1500;
 let score1 = 0;
 let score2 = 0;
 
 function setup() {
-  createCanvas(1300, 600);
+  let canvas = createCanvas(1300, 600);
+  canvas.parent('game');
   player1 = new Player(0, height/2, 50, 'green', 10);
   player2 = new Player(width - 50, height/2, 50, 'red', 10);
   hp1 = new Hp(player1.hp, 50, 20, 'green', "red");
@@ -46,7 +50,9 @@ function draw() {
       }
       else {
         bomb1.splice(i, 1);
-        player2.hp -= 1;
+        if (player2.invincible === false) {
+          player2.hp -= 1;
+        }
       }
     }
     else {
@@ -60,7 +66,9 @@ function draw() {
       }
       else {
         bomb2.splice(j, 1);
-        player1.hp -= 1;
+        if (player1.invincible === false) {
+          player1.hp -= 1;
+        }
       }
     }
     else {
@@ -175,6 +183,33 @@ function draw() {
       healBox.splice(n, 1);
     }
   }
+  if (frameCount % superBoxChance === 0) {
+    superBox.push(new Box(random(200, width -200), random(0, height), 4));
+  }
+  for (let o = 0; o < superBox.length; o++) {
+    if (superBox.length <= maxSuperBoxes) {
+      if ((player1.pos.x + player1.size) < superBox[o].pos.x || player1.pos.x > (superBox[o].pos.x + 20) || (player1.pos.y + player1.size) < superBox[o].pos.y || player1.pos.y > (superBox[o].pos.y + 20)) {
+        superBox[o].render(color(153, 150, 0));
+      }
+
+      else {
+        superBox[o].eat(player1, player2);
+        superBox.splice(o, 1);
+        break;
+      }
+      if ((player2.pos.x + player2.size) < superBox[o].pos.x || player2.pos.x > (superBox[o].pos.x + 20) || (player2.pos.y + player2.size) < superBox[o].pos.y || player2.pos.y > (superBox[o].pos.y + 20)) {
+        superBox[o].render(color(153, 150, 0));
+      }
+      else {
+        superBox[o].eat(player2, player1);
+        superBox.splice(o, 1);
+        break;
+      }
+    }
+    else {
+      superBox.splice(o, 1);
+    }
+  }
   player1.update();
   player2.update();
   hp1.update(player1.hp);
@@ -228,6 +263,7 @@ function keyPressed() {
       borderBox = [];
       freezeBox = [];
       healBox = [];
+      superBox = [];
       setup();
     }
   }

@@ -15,7 +15,7 @@ class Bomb {
     else if (this.rise === false) {
       this.i--;
     }
-    if (this.i >= 255) {
+    if (this.i >= 127) {
       this.rise = false;
     }
     else if (this.i <= 0) {

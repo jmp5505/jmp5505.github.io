@@ -10,6 +10,13 @@
         <script src="bomb.js"></script>
         <script src="hp.js"></script>
         <script src="box.js"></script>
+        <script>
+          document.addEventListener("keydown", function (e) {
+            if([32,37,38,39,40].indexOf(e.keyCode) > -1){
+              e.preventDefault();
+            }
+          }, false);
+        </script>
     </head>
     <body style="background-color: rgb(58, 119, 233);">
         <nav id="nav">
@@ -18,5 +25,17 @@
             <a href="./mover.html" style="color: rgb(0, 27, 27);">Mover</a>
             <hr>
         </nav>
+        <div id="game"></div>
+        <h3>MOVER</h3>
+        <hr>
+        <p>controls</p>
+        <p>P1: WASD + SPACE</p>
+        <p>P2: ARROWS + ENTER</p>
+        <hr>
+        <p>yellow box - SPEED</p>
+        <p>cyan box - FREEZE</p>
+        <p>blue box - opponent cannot travel through borders</p>
+        <p>white box with cross - HEAL</p>
+        <p>golden star - INVINCIBILITY and super SPEED boost</p>
     </body>
 </html>
