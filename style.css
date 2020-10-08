@@ -1,0 +1,27 @@
+body {
+    background-color: #752AAF;
+}
+nav {
+    background-color:#60228f;
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 30px;
+    height: 36px;
+}
+a {
+    color: rgb(209, 166, 240);
+    text-decoration: none;
+}
+#image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+#game {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4px;
+    display: block;
+    width: 90%;
+}

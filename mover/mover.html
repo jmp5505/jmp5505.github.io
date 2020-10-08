@@ -4,12 +4,14 @@
         <title>jmp website</title>
         <meta charset="UTF-8">
         <meta lang="en-US">
+        <link rel="stylesheet" href="../style.css">
         <script src="../p5.js"></script>
         <script src="sketch.js"></script>
         <script src="player.js"></script>
         <script src="bomb.js"></script>
         <script src="hp.js"></script>
         <script src="box.js"></script>
+        <script src="../preview.js"></script>
         <script>
           document.addEventListener("keydown", function (e) {
             if([32,37,38,39,40].indexOf(e.keyCode) > -1){
@@ -18,24 +20,12 @@
           }, false);
         </script>
     </head>
-    <body style="background-color: rgb(58, 119, 233);">
+    <body>
         <nav id="nav">
-            <a href="../index.html" style="color: rgb(0, 27, 27);">Main page</a>
-            <a href="../clicker/clicker.html" style="color: rgb(0, 27, 27);">Clicker</a>
-            <a href="./mover.html" style="color: rgb(0, 27, 27);">Mover</a>
-            <hr>
+          <a href="../index.html" onmousemove="show(0,0)" id="0" onmouseout="unshow(0,0)">HOME</a>
+          <a href="./mover.html" onmousemove="show(1,0)" id="1" onmouseout="unshow(1,0)">MOVER</a>
         </nav>
         <div id="game"></div>
-        <h3>MOVER</h3>
-        <hr>
-        <p>controls</p>
-        <p>P1: WASD + SPACE</p>
-        <p>P2: ARROWS + ENTER</p>
-        <hr>
-        <p>yellow box - SPEED</p>
-        <p>cyan box - FREEZE</p>
-        <p>blue box - opponent cannot travel through borders</p>
-        <p>white box with cross - HEAL</p>
-        <p>golden star - INVINCIBILITY and super SPEED boost</p>
+        <p id="show"></p>
     </body>
 </html>

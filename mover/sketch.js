@@ -24,7 +24,7 @@ let score1 = 0;
 let score2 = 0;
 
 function setup() {
-  let canvas = createCanvas(1300, 600);
+  let canvas = createCanvas(1200, 560);
   canvas.parent('game');
   player1 = new Player(0, height/2, 50, 'green', 10);
   player2 = new Player(width - 50, height/2, 50, 'red', 10);
@@ -40,8 +40,8 @@ function draw() {
   hp2.render();
   stroke(255);
   textSize(40);
-  text(score1, 10, 590);
-  text(score2, width - 40, 590);
+  text(score1, 10, height - 10);
+  text(score2, width - 40, height - 10);
 
   for(let i = 0; i < bomb1.length; i++) {
     if (bomb1.length <= maxBombs) {
