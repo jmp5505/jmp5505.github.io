@@ -4,19 +4,22 @@ var stop = false;
 var score = 0;
 var speed = 20;
 var dsound;
-var esound;   
+var esound;
+var ost;
 
 function preload() {
     soundFormats('wav');
     dsound = loadSound('https://jmp5505.github.io/snake/ded', console.log("dsound loaded"), console.log("noep"));
     esound = loadSound('https:/jmp5505.github.io/snake/eat', console.log("esound loaded"), console.log("nope"));
+    ost = loadSound('https:/jmp5505.github.io/snake/song', console.log("ost loaded"), console.log("nope"));
 }
 function setup() {
     let canvas = createCanvas(1200, 560);
     canvas.parent('game');
     snake = new Snake(width/2, height/2);
     scoreboard = new ScoreBoard(40, 40);
-    textFont("Monospace");   
+    textFont("Monospace");
+    ost.loop();   
 }
 
 function keyPressed() {
