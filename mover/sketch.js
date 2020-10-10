@@ -9,6 +9,7 @@ let borderBox = [];
 let freezeBox = [];
 let healBox = [];
 let superBox = [];
+let ost;
 const maxBombs = 10;
 const maxSpeedBoxes = 3;
 const maxBorderBoxes = 2;
@@ -23,6 +24,12 @@ const superBoxChance = 1500;
 let score1 = 0;
 let score2 = 0;
 
+
+function preload() { 
+  soundFormats('wav');
+  ost = loadSound('https:/jmp5505.github.io/mover/song', console.log("ost loaded"), console.log("nope"));
+
+}
 function setup() {
   let canvas = createCanvas(1200, 560);
   canvas.parent('game');
@@ -30,6 +37,9 @@ function setup() {
   player2 = new Player(width - 50, height/2, 50, 'red', 10);
   hp1 = new Hp(player1.hp, 50, 20, 'green', "red");
   hp2 = new Hp(player2.hp, width - 70, 20, 'red', "green");
+  if (!ost.isPlaying()) {
+    ost.loop();
+  }
 }
 
 function draw() {

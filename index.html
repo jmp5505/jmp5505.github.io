@@ -7,14 +7,17 @@
         <link rel="stylesheet" href="style.css">
         <link rel="preload" href=1.png as="image">
         <script src="preview.js"></script>
+        <script src="star.js"></script>
     </head>
-    <body onload="show(-1, 1)">
+    <body onload="show(-1, 1)" id="body" onmouseover="star()">
+        
         <nav  id="nav">
             <div>
+                <a href="./projects.html" onmousemove="show(4,1)" id="4" onmouseout="unshow(4,1)">PROJECTS</a>
                 <a href="./snake/snake.html" onmousemove="show(3,1)" id="3" onmouseout="unshow(3,1)">SNAKE</a>
                 <a href="index.html" onmousemove="show(0,1)" id="0" onmouseout="unshow(0,1)">HOME</a>
                 <a href="./mover/mover.html" onmousemove="show(1,1)" id="1" onmouseout="unshow(1,1)">MOVER</a>
-                <a href="./coinflip/coinflip.html" onmousemove="show(2,1)" id="2" onmouseout="unshow(2,1)">COIN FLIP</a>
+                <a href="./coinflip/coinflip.html" onmousemove="show(2,1)" id="2" onmouseout="unshow(2,1)">COINFLIP</a>
             </div>
         </nav>
         <p id="show">

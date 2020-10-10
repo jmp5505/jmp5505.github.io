@@ -19,7 +19,10 @@ function setup() {
     snake = new Snake(width/2, height/2);
     scoreboard = new ScoreBoard(40, 40);
     textFont("Monospace");
-    ost.loop();   
+    if (!ost.isPlaying()) {
+        ost.loop();
+    }
+       
 }
 
 function keyPressed() {
