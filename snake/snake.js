@@ -8,8 +8,8 @@ var esound;
 
 function preload() {
     soundFormats('wav');
-    dsound = loadSound('https://jmp5505.github.io/snake/ded');
-    esound = loadSound('https:/jmp5505.github.io/snake/eat');
+    dsound = loadSound('https://jmp5505.github.io/snake/ded', console.log("dsound loaded"), console.log("noep"));
+    esound = loadSound('https:/jmp5505.github.io/snake/eat', console.log("esound loaded"), console.log("nope"));
 }
 function setup() {
     let canvas = createCanvas(1200, 560);
