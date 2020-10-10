@@ -1,7 +1,12 @@
+var pos = 0;
+
 function star() {
     console.log("hey");
-    if (Date.getMinutes % 2 == 0) {
-        console.log("Ey");
-        document.getElementById("body").innerHTML = "<img src=\"star.gif?" + Math.floor(Math.random(0, 10000)) * 10000 + "\" style=\"position:absolute;z-index: -2; height: 200px;\">"
+    var d = new Date();
+    var n = d.getMinutes();
+    console.log(n);
+    if (n % 1 == 0) {
+        document.getElementById("star").innerHTML = "<img src=\"star.gif?" + n + "\" style=\"position:absolute;z-index: -20; height: 200px; left:" + Math.floor(Math.random(0, 10) * 100) + "%\">";
+        console.log("a");
     }
 }
