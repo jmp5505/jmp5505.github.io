@@ -16,8 +16,7 @@ function setup() {
     canvas.parent('game');
     snake = new Snake(width/2, height/2);
     scoreboard = new ScoreBoard(40, 40);
-    textFont("Monospace");
-    dsound.play();    
+    textFont("Monospace");   
 }
 
 function keyPressed() {
@@ -54,6 +53,7 @@ function draw() {
         frameRate(0);
         console.log("test");
         score = 0;
+        dsound.play(); 
     }
     
     background(0);
@@ -128,6 +128,7 @@ class Snake {
         score++;
         apples.splice(0, 1);
         console.log(score);
+        esound.play(); 
     }
 }
 
