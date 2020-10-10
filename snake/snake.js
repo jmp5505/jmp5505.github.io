@@ -2,43 +2,53 @@ var isapple = false;
 var apples = [];
 var stop = false;
 var score = 0;
+var speed = 20;
+var dsound;
+var esound;   
+
+function preload() {
+    soundFormats('wav');
+    dsound = loadSound('https://jmp5505.github.io/snake/ded');
+    esound = loadSound('https:/jmp5505.github.io/snake/eat');
+}
 function setup() {
-    let canvas = createCanvas(1200, 600);
+    let canvas = createCanvas(1200, 560);
     canvas.parent('game');
     snake = new Snake(width/2, height/2);
-    scoreboard = new ScoreBoard(width - 200, height - 20);
-    
+    scoreboard = new ScoreBoard(40, 40);
+    textFont("Monospace");
+    dsound.play();    
 }
 
 function keyPressed() {
-    if (keyCode == 83 && snake.vel.y != -25) {
-        snake.nextvel = createVector(0, 25);
+    if (keyCode == 83 && snake.vel.y != -speed) {
+        snake.nextvel = createVector(0, speed);
     }
-    else if (keyCode == 87 && snake.vel.y != 25) {
-        snake.nextvel = createVector(0, -25);
+    else if (keyCode == 87 && snake.vel.y != speed) {
+        snake.nextvel = createVector(0, -speed);
     }
-    else if (keyCode == 68 && snake.vel.x != -25) {
-        snake.nextvel = createVector(25, 0);
+    else if (keyCode == 68 && snake.vel.x != -speed) {
+        snake.nextvel = createVector(speed, 0);
     }
-    else if (keyCode == 65 && snake.vel.x != 25) {
-        snake.nextvel = createVector(-25, 0);
+    else if (keyCode == 65 && snake.vel.x != speed) {
+        snake.nextvel = createVector(-speed, 0);
     }
     else if (keyCode == 82) {
         stop = false;
         apples = [];
         isapple = false;
         snake.body = [];
-        frameRate(12);
+        frameRate(15);
         setup();
     }
 }
 function draw() {
     if (stop == false) {
-        frameRate(12);
+        frameRate(15);
     }
     else {
         
-        textSize(25);
+        textSize(speed);
         fill(255);
         stroke(255)
         frameRate(0);
@@ -50,7 +60,7 @@ function draw() {
     
     
     if (isapple == false) {
-        apples.push(new Apple(floor(random(width / 25)) * 25, floor(random(height / 25)) * 25));
+        apples.push(new Apple(floor(random(width / speed)) * speed, floor(random(height / speed)) * speed));
         isapple = true;
     }
     if (snake.body.length > 5) {
@@ -80,8 +90,8 @@ function draw() {
 class Snake {
     constructor(x, y) {
         this.pos = createVector(x, y);
-        this.vel = createVector(-25, 0);
-        this.nextvel = createVector(-25, 0);
+        this.vel = createVector(-speed, 0);
+        this.nextvel = createVector(-speed, 0);
         this.body = [];
         this.l = 3;
     }
@@ -91,7 +101,7 @@ class Snake {
         fill(255);
         
         for (var i = 0; i < this.body.length -1; i++) {
-            rect(this.body[i].x, this.body[i].y, 25, 25);
+            rect(this.body[i].x, this.body[i].y, speed, speed);
             
         }
         
@@ -128,7 +138,7 @@ class Apple {
     render() {
         stroke(255,0,0);
         fill(255,0,0);
-        rect(this.pos.x, this.pos.y, 25, 25);
+        rect(this.pos.x, this.pos.y, speed, speed);
     }
 }
 class ScoreBoard {
@@ -141,5 +151,8 @@ class ScoreBoard {
         textSize(32);
         fill(255);
         text("SCORE: " + score.toString(), this.x, this.y);
+        if (stop == true) {
+            text("GAME OVER!!\nR to RESTART", width/2 - 100, height/2);
+        }
     }
 }
