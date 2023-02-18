@@ -9,9 +9,9 @@ var ost;
 
 function preload() {
     soundFormats('wav');
-    dsound = loadSound('https://jmp5505.github.io/snake/ded.wav', console.log("dsound loaded"), console.log("noep"));
-    esound = loadSound('https:/jmp5505.github.io/snake/eat.wav', console.log("esound loaded"), console.log("nope"));
-    ost = loadSound('https:/jmp5505.github.io/snake/song.wav', console.log("ost loaded"), console.log("nope"));
+    dsound = loadSound('https://jmp5505.github.io/snake/ded', console.log("dsound loaded"), console.log("noep"));
+    esound = loadSound('https:/jmp5505.github.io/snake/eat', console.log("esound loaded"), console.log("nope"));
+    ost = loadSound('https:/jmp5505.github.io/snake/song', console.log("ost loaded"), console.log("nope"));
 }
 function setup() {
     let canvas = createCanvas(1200, 560);
@@ -21,6 +21,9 @@ function setup() {
     textFont("Monospace");
     if (!ost.isPlaying()) {
         ost.loop();
+    }
+    if (!localStorage.highscore) {
+        localStorage.highscore = 0;
     }
        
 }
@@ -43,8 +46,9 @@ function keyPressed() {
         apples = [];
         isapple = false;
         snake.body = [];
-        frameRate(15);
+        
         setup();
+        frameRate(15);
     }
 }
 function draw() {
@@ -61,9 +65,12 @@ function draw() {
         score = 0;
         dsound.play(); 
     }
+    if (localStorage.highscore < score) {
+        localStorage.setItem("highscore", score);
+    }
     
     background(0);
-    
+    localStorage.getItem("highscore");
     
     if (isapple == false) {
         apples.push(new Apple(floor(random(width / speed)) * speed, floor(random(height / speed)) * speed));
@@ -132,7 +139,9 @@ class Snake {
     eat() {
         this.l++;
         score++;
-        apples.splice(0, 1);
+        if (apples) {
+            apples.splice(0, 1);
+        }
         console.log(score);
         esound.play(); 
     }
@@ -158,6 +167,7 @@ class ScoreBoard {
         textSize(32);
         fill(255);
         text("SCORE: " + score.toString(), this.x, this.y);
+        text("HIGHSCORE: " + localStorage.getItem("highscore").toString(), this.x, height - this.y);
         if (stop == true) {
             text("GAME OVER!!\nR to RESTART", width/2 - 100, height/2);
         }
