@@ -25,11 +25,11 @@ let score1 = 0;
 let score2 = 0;
 
 
-/*function preload() { 
+function preload() { 
   soundFormats('wav');
-  ost = loadSound('https:/jmp5505.github.io/mover/song', console.log("ost loaded"), console.log("nope"));
+  ost = loadSound('https://jmp5505.github.io/mover/song', console.log("ost loaded"), console.log("nope"));
 
-}*/
+}
 function setup() {
   let canvas = createCanvas(1200, 560);
   canvas.parent('game');
