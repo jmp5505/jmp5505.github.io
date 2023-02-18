@@ -9,9 +9,9 @@ var ost;
 
 function preload() {
     soundFormats('wav');
-    dsound = loadSound('https://jmp5505.github.io/snake/ded', console.log("dsound loaded"), console.log("noep"));
-    esound = loadSound('https:/jmp5505.github.io/snake/eat', console.log("esound loaded"), console.log("nope"));
-    ost = loadSound('https:/jmp5505.github.io/snake/song', console.log("ost loaded"), console.log("nope"));
+    dsound = loadSound('../ded', console.log("dsound loaded"), console.log("nope"));
+    esound = loadSound('../eat', console.log("esound loaded"), console.log("nope"));
+    ost = loadSound('../song', console.log("ost loaded"), console.log("nope"));
 }
 function setup() {
     let canvas = createCanvas(1200, 560);
